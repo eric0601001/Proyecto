@@ -1,0 +1,114 @@
+html, body {
+    height: 94%;
+}
+header, footer{
+    background-color: #4298FF;
+    font-size: 16px;
+    color: #ffffff; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    .full-height {
+        height: 100%;
+    }
+
+    section {
+        background-color: #ffd900;
+    }
+
+        .columna {
+            position: static;
+        }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 6%;
+    }
+
+/* Bloques */
+.alerta {
+    width: 300px;
+    border-radius: 15px;
+    background-color: lightgray;
+    border: 1px solid white;
+    box-shadow: 1px 1px 2px gray;
+    position: absolute;
+}
+
+/* Elementos */
+.alerta__header {
+    border-bottom: 1px solid white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  font-family:cursive;
+}
+
+.alerta__contenido {
+    font-size: 14px;
+    padding: 10px;
+    
+}
+
+.alerta__footer {
+    border-top: 1px solid white;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    display: block;
+    font-family: cursive;
+}
+
+/* Modificadores */
+/* Estilo */
+.alerta--info {
+    background-color: #0077ff;
+}
+.alerta--exito {
+    background-color: #099110;
+}
+.alerta--advertencia {
+    background-color: #6f00ff;
+}
+.alerta--error {
+    background-color: #ff0000;
+}
+
+/* Posición */
+.alerta--arriba-izquierda {
+    left: 10px;
+    top: 10px;
+}
+.alerta--abajo-izquierda {
+    left: 10px;
+    bottom: 10px;
+}
+.alerta--arriba-derecha {
+    right: 10px;
+    top: 10px;
+}
+.alerta--abajo-derecha {
+    right: 10px;
+    bottom: 10px;
+}
+*{color: #fff;}
+footer{background-color: #252528;
+       height: 50px}
+body{background-color: #5197ff;
+     color: #fff;}
+.formulario{
+    color: #fff;
+    width: 400px;
+    padding: 30px;}
+.table{
+    max-width: 1300px;
+    padding: 30px;}
+.q{max-width: 75px;}
+#imagen1{
+    float:right;
+    padding: 10px;
+    margin: 10px;
+}
+

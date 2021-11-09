@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Componentes SLOT SCOPE</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="css/estilo.css">
+        <!--Links para bootsrap-->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+        <link rel="stylesheet" href="css/estilos.css" />
+   </head>
+    <body>
+        <header class="container-fluid text-center">
+            <span><h2><b>BIENVENIDO AL GYM "ZEUS"-Tu cuerpo al 100% </b></h2></span>
+        </header>
+        <section class="container text-center" id="cont">
+            <section id="imagen1">
+                <img src="imagenes/proteina.png" width="400px" height="500px" alt="proteina">
+            </section>
+            <div class="col-md-8 offset-md-2 p-3 columna">
+                <button class="btn btn-primary" @click="mostrarBienvenida = true"> ¿Quienes somos?</button>
+                <button class="btn btn-success" @click="mostrarInicio = true">Beneficios de los suplementos</button>
+                <button class="btn btn-warning"@click="mostrarAlerta = true">Frase motivacional</button>
+                <button class="btn btn-danger" @click="mostrarError = true">Riesgos de no hacer ejercicio</button>
+                
+                <alerta @ocultar="mostrarBienvenida = false" v-show="mostrarBienvenida" tipo="alerta--info" posicion="alerta--arriba-izquierda">
+                    <template slot="header">
+                        ¿Quienes somos?
+                    </template>
+                    <template>
+                        Un gymnasio situado en la cuidad de Leon, que empezo hace 5 años, como un local pequeño que ha 
+                        crecido a lo largo de los años, tenemos los mejores aparatos par mejorar su salud y tu belleza, ademas de vender suplementos.
+                    </template>
+                    <template slot="footer">
+                        Se bienvenido...
+                    </template>
+                </alerta>
+
+                <alerta @ocultar="mostrarInicio = false" v-show="mostrarInicio" tipo="alerta--exito" posicion="alerta--arriba-derecha">
+                    <template slot="header">
+                        Beneficios 
+                    </template>
+                    <template>
+                        Reciente evidencia apoya que la suplementación de forma puntual de vitaminas antioxidantes podría ser 
+                        beneficiosa en aquellos entrenamientos que, por su elevada intensidad, duracion 
+                        y/o condiciones produzcan niveles muy elevados de radicales que son perjudiciales.
+                    </template>
+                    <template slot="footer">
+                        Todo con medida obviamente...
+                    </template>
+                </alerta>
+
+                <alerta @ocultar="mostrarAlerta = false" v-show="mostrarAlerta" tipo="alerta--advertencia" posicion="alerta--abajo-derecha" frase="No te desesperes">
+                    <template slot="header">
+                        Frase motivacional
+                    </template>
+                    <template>
+                       Cuida tu cuerpo .Es el unico lugar que tienes para vivir 
+                    </template>
+                    <template slot="footer" slot-scope="mensaje">
+                        Que excusa tienes ahora :)
+                    </template>
+                </alerta>
+
+                <alerta @ocultar="mostrarError = false" v-show="mostrarError" tipo="alerta--error" posicion="alerta--abajo-izquierda" frase="Corregir" :listado="tipos">
+                    <template slot="header">
+                        Riesgos de no hacer ejercicio
+                    </template>
+                    <template><span></span></template>
+                    <template slot="datos" slot-scope="errores">
+                        <li>{{ errores.nombre }}</li>
+                    </template>
+                    <template slot="footer" slot-scope="mensaje">
+                        Empieza a cambiar tu vida hoy 
+                    </template>
+                </alerta>
+            </div>
+                <div class="col-md-6 offset-3">
+                    <h2>Ingresar productos</h2>
+                    <div class="formulario">
+                    <div class="form-group">
+                        <label>Nombre del producto</label>
+                        <input type="text" class="form-control" v-model="nuevoProductoNombre"><br>
+                        <label>Cantidad</label>
+                        <input type="number" class="form-control" v-model="nuevoProductoCantidad"><br>
+                        <label>Precio</label>
+                        <input type="number" class="form-control" v-model="nuevoProductoPrecio" @keyup.enter="agregar()"><br></div>
+                        <button class="btn btn-warning" @click="agregar()">Agregar</button>
+                        <h2>Productos: {{numProducts}}</h2>
+                    </div></div>
+    
+                        
+                        <hr>
+                        <table class="table"><tbody>
+                            <tr v-for="producto in productos" :class="{zero: producto.precioTotal==0}"><th>
+                                <div class="form-group"><br>
+                                <input type="number" class="form-control q" v-model="producto.productoCantidad" @keyup="suma()"><br>
+                                <button class="btn btn-success b" @click="producto.productoCantidad++; suma()">+</button>
+                                <button class="btn btn-danger b" @click="producto.productoCantidad--; suma()" :disabled="producto.productoCantidad == 0">-</button></div></th>
+                            <td>{{producto.productoNombre}}</td>
+                                <td v-if="producto.precioTotal>0">Precio producto: ${{producto.precioUnico}}</td>
+                                <td v-if="producto.precioTotal>0">Suma de productos llevados: ${{producto.precioTotal}}</td>
+                                <td colspan="2" v-else class="text-center font">SIN STOCK</td></tr>
+                            <tr>
+                                <td colspan="2">
+                                <th>Subtotal: </th>
+                                <td>${{subtotal}}</td></tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <th>IVA:</th>
+                                <td>${{iva}}</td></tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <th>Total:</th>
+                                <td>${{total}}
+            </td></tr></tbody></table>
+               
+        </div>
+            
+        </section>
+
+
+        <template id="mensajeAlerta">
+            <article class="alerta" :class="[tipo, posicion]">
+                <h3 class="alerta__header">
+                    <button class="btn btn-dark" @click="ocultarMensaje()">X</button>
+                    <slot name="header" ]>
+                       Un valor vacio para ser llenado
+                    </slot>
+                </h3>
+                <span>
+                    <slot>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit omnis modi sequi, veritatis et
+                        ea praesentium a cupiditate, amet optio, unde sit officiis alias voluptatem sapiente error odio
+                        numquam aliquam!
+                    </slot>
+                </span>
+                <p class="alerta__contenido">
+                    <slot name="datos" v-for="error in listado" :nombre="error"></slot>
+                </p>
+                <span class="alerta__footer">
+                    <slot name="footer" :tipo="alerta"></slot>
+                </span>
+            </article>
+        </template>
+        
+        <script src="js/funciones.js"></script>
+    </body>
+</html>
